@@ -8,7 +8,7 @@ char x[n];
 char khkt;
 int i=-1;
 char dockh();void baoloi();
-void START();void KB();void TV();void TENTV();void TEN();void TENN();void KH();
+void START();void KB();void TV();void TENTV();void TEN();void TEN_PHAY();void KH();
 //void BIEN();
 void KIEU();void SO();void SN();void D();void S();void S_PHAY(); void LK();void LK_PHAY();
 void B();void HANG(); void MAIN(); void TRA_VE();void X();void CT();void CT_PHAY();void IN();void OUT();
@@ -23,9 +23,10 @@ void TTG();
 void TTTH(); void A(); void GT(); void P_TOAN(); void P_TG(); void P_G();
 
 
-char ten[]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','.'};
-char so[]={'0','1','2','3','4','5','6','7','8','9'};
-//char ktdb[6]={'-','+','*','/','%','='};
+
+char tenbien[]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_'};
+char tenbien_[]={'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_'};
+
 
 int main() {
 	ifstream file("E:/Nam 3 Ki II/Do An/DO AN/CODE/CT.txt");
@@ -54,11 +55,10 @@ return 0;
 }
 void baoloi()
 {
-	cout<<"Error"<<i+1;
+	cout<<"Error "<<i<< " '"<<x[i]<<"' ";
 }
 char dockh()
 {
-
 	i++;
 	return x[i];
 }
@@ -83,21 +83,59 @@ void START()
 	
 }
 
+
+//void TEN()
+//{
+//	bool check=false;
+//	for(int k=0;k<sizeof(tenbien)/sizeof(char);k++)
+//	{	
+//		if(khkt==tenbien[k])
+//		{
+//			check=true;
+//			break;
+//		}	
+//	}
+//	if(check){
+//	khkt=dockh();
+//	cout<<khkt;
+//	TEN_PHAY();		
+//	}
+//	
+//}
+
 void TEN()
 {
-	//lam lai
 	while(khkt)
 	{
-			
-		if(khkt=='='||khkt=='+'||khkt=='-'||khkt=='*'||khkt=='%'||isspace(khkt)==1||khkt=='('||khkt==')')
+		if(khkt=='+'||khkt=='-'||khkt=='='||khkt=='*'||khkt=='/'||khkt=='%'||khkt==';')
 		{
+			cout<<"'"<<khkt<<"'";
 			break;
+			
 		}
-		khkt=dockh();
-		
+		else khkt=dockh();
 	}
 }
 
+void TEN_PHAY()
+{
+	bool check=false;
+	for(int k=0;k<sizeof(tenbien_)/sizeof(char);k++)
+	{
+		if(khkt==tenbien_[k]){	
+			check=true;
+			break;
+		}
+	}
+	if(check)
+	{
+		khkt=dockh();
+		cout<<khkt;
+		TEN_PHAY();
+	}
+	else khkt=dockh();
+	
+}
 
 void IN()
 {
@@ -519,11 +557,11 @@ void STEP()
 void OP()
 {
 	OP_PHAY();
-//	if(khkt==';')
-//	{
-//		checkc();
-//	}
-//	else baoloi();
+	if(khkt==';')
+	{
+		cout<<"Correct";
+	}
+	else baoloi();
 }
 
 void OP_PHAY()
@@ -559,11 +597,12 @@ void OP_PHAY()
 	} 
 	
 	//toan tu tang giam voi mau ++TEN va --TEN
-	else if (khkt=='+')
+	else if(khkt=='+')
 	{
 		khkt=dockh();
 		if(khkt=='+')
 		{
+			khkt=dockh();
 			TTTG();
 		} 
 		else baoloi();	
@@ -574,6 +613,7 @@ void OP_PHAY()
 		khkt=dockh();
 		if(khkt=='-')
 		{
+			khkt=dockh();
 			TTTG();
 		}
 		else baoloi();
@@ -589,7 +629,7 @@ void OP_PHAY()
 			TTTH();
 		}
 		
-		else if (khkt=='+')
+		else if(khkt=='+')
 		{
 			khkt=dockh();
 			if(khkt=='+')//TOAN TU TANG GIAM form TEN++|--
@@ -620,11 +660,8 @@ void OP_PHAY()
 		{
 			khkt=dockh();
 			TTG();
-		}
-		
-		
+		}	
 	}
-
 }
 
 //TOAN TU TANG GIAM 1: FORM ++ | -- TEN;
@@ -637,7 +674,6 @@ void TTTG()
 void TTTG_PHAY()
 {
 	khkt=dockh();
-	
 }
 
 
@@ -656,6 +692,7 @@ void TTTH()
 	A();
 }
 
+//xem lai van pham
 void A()
 {
 	if(khkt=='(')
