@@ -682,8 +682,9 @@ void TTG()
 {
 	if(khkt=='=')
 	{
-		A();
-	}
+		khkt=dockh();
+		TEN();
+	} 
 }
 
 //TOAN TU TOAN HOC
@@ -709,7 +710,7 @@ void A()
 	}
 	else
 	{
-		GT();
+		TEN();
 		P_TOAN();
 		checkc();	
 	}	
@@ -720,7 +721,9 @@ void P_TOAN()
 {
 	if(khkt=='+'||khkt=='-'||khkt=='/'||khkt=='%'||khkt=='*')
 	{
+		cout<<"   "<<khkt<<"    ";
 		khkt=dockh();
+		
 		A();	
 	}
 	else checkc();			
