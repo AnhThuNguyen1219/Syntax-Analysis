@@ -12,7 +12,7 @@ void START();void KB();void TV();void TENTV();void TEN();void TEN_PHAY();void KH
 //void BIEN();
 void KIEU();void SO();void SN();void D();void S();void S_PHAY(); void LK();void LK_PHAY();
 void B();void HANG(); void MAIN(); void TRA_VE();void X();void CT();void CT_PHAY();void IN();void OUT();
-void STRING();void STR();void LOOP(); void BT(); 
+void STRING();void STR();void LOOP(); void BT(); void BT_PHAY();
 
 void STEP(); 
 
@@ -21,8 +21,9 @@ void OP(); void OP_PHAY();
 void TTTG(); void TTTG_PHAY();
 void TTG();
 void TTTH(); void A(); void GT(); void P_TOAN(); void P_TG(); void P_G();
+void TTQH();
 
-
+void P_SO();
 
 char tenbien[]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_'};
 char tenbien_[]={'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_'};
@@ -107,11 +108,9 @@ void TEN()
 {
 	while(khkt)
 	{
-		if(khkt=='+'||khkt=='-'||khkt=='='||khkt=='*'||khkt=='/'||khkt=='%'||khkt==';')
+		if(khkt=='+'||khkt=='-'||khkt=='='||khkt=='*'||khkt=='/'||khkt=='%'||khkt==';'||khkt=='>'||khkt=='<'||khkt=='!')
 		{
-			cout<<"'"<<khkt<<"'";
-			break;
-			
+			break;	
 		}
 		else khkt=dockh();
 	}
@@ -468,8 +467,33 @@ void LOOP()
 void BT()
 {
 	TEN();
-//	SO();	
+	P_SO();	
 }
+
+void P_SO()
+{
+	if(khkt=='!'||khkt=='=')
+	{
+		khkt=dockh();
+		if(khkt=='=')
+		{
+			khkt=dockh();
+			TEN();
+		}	
+	}
+	else if(khkt=='<'||khkt=='>')
+	{
+		khkt=dockh();
+		if(khkt=='=')
+		{
+			khkt=dockh();
+			TEN();
+		}
+		else TEN();
+	}
+	else khkt=dockh();
+}
+
 
 
 void STEP()
@@ -619,14 +643,23 @@ void OP_PHAY()
 		else baoloi();
 	}
 	
-	//TEN OP_PHAYPHAY
 	else
 	{
 		TEN();
 		//TOAN TU TOAN HOC: form : TEN=A
 		if(khkt=='=')
 		{
-			TTTH();
+			khkt=dockh();
+			if(khkt=='=')
+			{
+				khkt=dockh();
+				TEN();
+			}
+			else TTTH();
+		}
+		else if(khkt=='<'||khkt=='>'||khkt=='!')
+		{
+			TTQH();
 		}
 		
 		else if(khkt=='+')
@@ -704,43 +737,39 @@ void A()
 		{
 			P_TOAN();
 			checkc();
-			
 		}
 		else baoloi();
 	}
 	else
 	{
 		TEN();
-		P_TOAN();
-		checkc();	
+		P_TOAN();	
 	}	
 }
 
-//coi lai toan bo p_tg, p_g
 void P_TOAN()
 {
 	if(khkt=='+'||khkt=='-'||khkt=='/'||khkt=='%'||khkt=='*')
 	{
-		cout<<"   "<<khkt<<"    ";
 		khkt=dockh();
-		
 		A();	
 	}
-	else checkc();			
+//	else checkc();			
 }
 
 void GT()
 {
-	
+	TEN();
+	//SO();
 }
 
 //TOAN TU QUAN HE: VIET LAI
 void TTQH()
 {
-	BT();
+	P_SO();
 }
 
-
+//VIET LAI
 void CT()
 {
 	if(khkt=='{') {
